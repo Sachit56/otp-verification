@@ -23,3 +23,7 @@ def Post_View(request):
 
     serializer.save()
     return Response({'status':200,'message':serializer.data})
+
+@api_view(['PUT'])
+def Put_view(request):
+    data=request.data
