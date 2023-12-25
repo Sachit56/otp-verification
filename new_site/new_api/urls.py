@@ -6,5 +6,6 @@ app_name='new_api'
 urlpatterns = [
     path('<int:id>/',views.StudentView.as_view(),name='api-id'),
     path('book/',views.BookView,name='book'),
-    path('',views.StudentView.as_view(),name='api')
+    path('',views.StudentView.as_view(),name='api'),
+    path('user/',views.UserView.as_view(),name='user')
 ]

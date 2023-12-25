@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view,APIView
 from .models import *
 from .serializers import *
+from rest_framework.authtoken.models import Token
 
 # Create your views here.
 class StudentView(APIView):
@@ -59,3 +60,20 @@ def BookView(request):
     serializer=BookSerializer(Book_obj,many=True)
 
     return Response({'status':200,'message':serializer.data})
+
+class UserView(APIView):
+    def post(self,request):
+        data=request.data
+        
+        serializer=UserSerializer(data=data)
+
+
+        if not serializer.is_valid():
+            print(serializer.errors)
+            return Response({'status':400,'message':serializer.errors})
+        serializer.save()
+
+        user=User.objects.get(username=serializer.data['username'])
+        token_obj, _ =    Token.objects.get_or_create(user=user)
+
+        return Response({'status':200,'message':serializer.data,'token':str(token_obj)})
