@@ -4,9 +4,13 @@ from rest_framework.decorators import api_view,APIView
 from .models import *
 from .serializers import *
 from rest_framework.authtoken.models import Token
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 class StudentView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self,request):
         students=Student.objects.all()
         serializer=StudentSerializer(students,many=True)
