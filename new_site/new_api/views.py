@@ -50,3 +50,9 @@ def Delete_View(request,id):
   
         return Response({'status':200,'message':'Cannot delete'})
 
+@api_view(['GET'])
+def BookView(request):
+    Book_obj=Book.objects.all()
+    serializer=BookSerializer(Book_obj,many=True)
+
+    return Response({'status':200,'message':serializer.data})
