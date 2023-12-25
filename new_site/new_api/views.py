@@ -36,3 +36,17 @@ def Update_View(request,id):
     
     serializer.save()
     return Response({'status':200,'message':serializer.data})
+
+@api_view(['DELETE'])
+def Delete_View(request,id):
+    try:
+        student_obj=get_object_or_404(Student,id=id)
+        student_obj.delete()
+        return Response({'status':400,'message':'Deleted'})
+    
+
+    except:
+        
+  
+        return Response({'status':200,'message':'Cannot delete'})
+
