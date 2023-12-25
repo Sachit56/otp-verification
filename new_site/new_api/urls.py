@@ -5,5 +5,6 @@ app_name='new_api'
 
 urlpatterns = [
     path('',views.apiView,name='api'),
-    path('post/',views.Post_View,name='post')
+    path('post/',views.Post_View,name='post'),
+    path('update/<int:id>',views.Update_View,name='patch')
 ]

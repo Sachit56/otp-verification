@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import *
@@ -24,6 +24,15 @@ def Post_View(request):
     serializer.save()
     return Response({'status':200,'message':serializer.data})
 
-@api_view(['PUT'])
-def Put_view(request):
+@api_view(['PATCH'])
+def Update_View(request,id):
     data=request.data
+    student_obj = get_object_or_404(Student, id=id)
+    serializer=StudentSerializer(student_obj,data=data,partial=True)
+
+    if not serializer.is_valid():
+        print(serializer.errors)
+        return Response({'status':400,'msg':'no such datas'})
+    
+    serializer.save()
+    return Response({'status':200,'message':serializer.data})
