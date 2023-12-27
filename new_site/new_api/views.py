@@ -62,7 +62,10 @@ class StudentGeneric(generics.ListAPIView,generics.CreateAPIView):
     serializer_class=StudentSerializer
 
 
-
+class StudentIdGeneric(generics.DestroyAPIView,generics.UpdateAPIView):
+    queryset=Student.objects.all()
+    serializer_class=StudentSerializer
+    lookup_field='id'
 
 
 @api_view(['GET'])
