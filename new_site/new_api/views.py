@@ -9,6 +9,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import generics
+import pandas as pd
+from django.conf import settings
+import uuid
 
 # Create your views here.
 class StudentView(APIView):
@@ -67,6 +70,10 @@ class StudentIdGeneric(generics.DestroyAPIView,generics.UpdateAPIView):
     serializer_class=StudentSerializer
     lookup_field='id'
 
+class GeneratePdf(APIView):
+    def get(self,request):
+
+        return Response({'status':200})
 
 @api_view(['GET'])
 def BookView(request):
@@ -93,3 +100,14 @@ class UserView(APIView):
 
         return Response({'status':200,'message':serializer.data,'refresh':str(refresh),
         'access': str(refresh.access_token)})
+
+class ExcelView(APIView):
+    def get(self,request):
+        student_obj=Student.objects.all()
+
+        seralizer=StudentSerializer(student_obj,many=True)
+        df=pd.DataFrame(seralizer.data)
+        print(df)
+        df.to_csv(f'public/static/excel/{uuid.uuid4()}.csv',encoding='UTF-8')
+
+        return Response({'status':200})

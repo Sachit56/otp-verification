@@ -24,3 +24,5 @@ class Book(models.Model):
         return self.book
 
 
+class ExcelModel(models.Model):
+    excel=models.FileField(upload_to='excel')

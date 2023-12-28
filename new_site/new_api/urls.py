@@ -12,5 +12,6 @@ urlpatterns = [
     path('',views.StudentView.as_view(),name='api'),
     path('user/',views.UserView.as_view(),name='user'),
     path('generic/',views.StudentGeneric.as_view(),name='generic'),
-    path('generic/<int:id>',views.StudentIdGeneric.as_view(),name='generic_id')
+    path('generic/<int:id>',views.StudentIdGeneric.as_view(),name='generic_id'),
+    path('excel/',views.ExcelView.as_view(),name='excel')
 ]
