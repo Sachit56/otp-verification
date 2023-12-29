@@ -108,6 +108,12 @@ class ExcelView(APIView):
         seralizer=StudentSerializer(student_obj,many=True)
         df=pd.DataFrame(seralizer.data)
         print(df)
-        df.to_csv(f'public/static/excel/{uuid.uuid4()}.csv',encoding='UTF-8')
+        df.to_csv(f'public/static/excel/{uuid.uuid4()}.csv',encoding='UTF-8',index=False)
 
+        return Response({'status':200})
+    
+    def post(self,request):
+        excel_upload=ExcelModel.objects.create(excel=request.FILES['files'])
+        df=pd.read_csv(f'{settings.BASE_DIR}/public/static/{excel_upload.excel}')
+        print(df.values.tolist())
         return Response({'status':200})
